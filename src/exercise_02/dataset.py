@@ -1,3 +1,10 @@
+'''
+El dataset lo que hace es calcular los valores reales (y) de la curva a partir de unas entradas x.
+Genera la curva y un array de x e y. La red al validar le pregunta en un índice del array (punto de una función)
+qué valor tiene, y después compara cuánto de lejos está el valor que ha obtenido la red (y gorrito) con
+la función de pérdida, que en este caso es error cuadrático. 
+'''
+
 from pathlib import Path
 
 import matplotlib.pyplot as plt

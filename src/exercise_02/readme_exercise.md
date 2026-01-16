@@ -3,28 +3,51 @@
 
 ## Objective
 
-Estimation of a unknown function by a machine learning model
+The objective of this exercise is to model an unknown function by a machine learning method.
+
+*Teacher's Note: The function that we are trying to model is the linear function y = -3x^2 + 2x. The purpose of the exercise is not to discover the analytical function, but to create a model that best mimics the behavior of that function, even if it is a black box for the user.*
 
 ## Task Formalization
 
-Write your answer here
+The task in hand can be formalized in two steps. First, we will define what we are tring to achieve as clearlly as possible. Second, we will define the approach we are taking to solve it.
 
 ### Task Formalization (Inference)
 
-Write your answer here
+There is an unknown function $f$ for which we have a bunch of data about certain input $x$ and its corresponding output $y$.
+
+$$
+y = f(x)
+$$
+
+We are trying to create a model of $f$ using a Machine Learning method to infer the $W$ weight matrix that better expreses the relationship between $x$-$y$ pair of data. Mathematically expressed:
+
+$$
+y = f(W,x)
+$$
+
+Graphically expressed:
+
+```mermaid
+graph TD
+    A((x)) --> B["f(W,x)"]
+    B --> C((y))
+    
+```
+The input vector has size [bs x 1]. The weight matrix has size [1 x 1]
+
 ### Task Formalization (Training)
 
 Write your answer here
 
 ## Evaluation metrics
 
-Write your answer here
+Since we are dealing with a regression problem, we will use the mean squared error (MSE), mean absolute error (MAE), and R-squared as evaluation metrics.
 
 ## Data Considerations
 
 ### Dataset description
 
-Write your answer here
+Dataset contains 100 noisy data points with a noise standard deviation of 20 from the true function (y = -3x^2 + 2x).
 
 ### Data preparation and preprocessing
 
