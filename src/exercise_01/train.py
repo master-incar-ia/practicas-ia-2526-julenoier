@@ -70,7 +70,7 @@ def train_model(output_folder: Path, device: torch.device):
             train_loss += loss.item()
 
             # Backward pass and optimization
-            optimizer.zero_grad()
+            optimizer.zero_grad() # Pesos viejos más gradiente por learning rate
             loss.backward()
             optimizer.step()
 
@@ -122,9 +122,10 @@ if __name__ == "__main__":
 
     device = get_device("auto") # choices are "auto", "cpu", "cuda"
     print(f"Using device: {device}")
-    train_model(output_folder, device=device)
-
     # Set the seed for reproducibility
     torch.manual_seed(42)
+    train_model(output_folder, device=device)
+
+    
     
     

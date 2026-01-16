@@ -13,9 +13,9 @@ from .model import SimplePerceptron
 
 def evaluate_and_plot(loader,model, dataset_name, output_folder):
     model.eval()
-    all_inputs = []
-    all_outputs = []
-    all_targets = []
+    all_inputs = [] # Guarda las x
+    all_outputs = [] # Guarda las y gorrito
+    all_targets = [] # Guarda las y
 
     with torch.no_grad():
         for inputs, targets in loader:
@@ -115,7 +115,7 @@ if __name__ == "__main__":
 
     # Load the best model weights
     model = SimplePerceptron(input_dim=1, output_dim=1)
-    model.load_state_dict(torch.load(output_folder / "best_model.pth"))
+    model.load_state_dict(torch.load(output_folder / "best_model.pth")) #Para cargar los pesos
 
     metrics = {}
     # Evaluate and plot for train, validation and test datasets

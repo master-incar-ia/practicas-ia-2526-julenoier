@@ -115,6 +115,7 @@ Learning rate is set to 0.0001
 *Task for the student: Make changes until the model works. Explain all the changes you have made to the training hyperparameters and why.*
 
 
+
 ### Discussion of the training process
 
 We can appreciate that the model converges and no overfitting happens.

@@ -42,7 +42,7 @@ if __name__ == "__main__":
     output_folder = Path(__file__).parent.parent.parent / "outs" / Path(__file__).parent.name
     output_folder.mkdir(exist_ok=True, parents=True)
 
-    dataset = NoisyRegressionDataset()
+    dataset = NoisyRegressionDataset(size = 1000)
     print(f"Dataset length: {len(dataset)}")
     print(f"First item: {dataset[0]}")
     # save the plot

@@ -7,6 +7,7 @@ class SimplePerceptron(nn.Module):
         super().__init__()
         self.fc = nn.Linear(input_dim, output_dim)
         self.activation = nn.Identity()
+        #self.apodo = apodo
 
     def forward(self, x, use_activation=True):
         x = self.fc(x)
@@ -16,8 +17,13 @@ class SimplePerceptron(nn.Module):
 
 
 if __name__ == "__main__":
-    model = SimplePerceptron(1, 1)
-    print(model)
+    model1 = SimplePerceptron(1, 1, "mi_modelo_sencillo")
+    model2 = SimplePerceptron(1000, 2, "mi_modelo_desfibrilador")
+
     x = torch.tensor([1.0])
-    print(model(x))
+    print(model1.forward)
     pass
+    # print(model)
+    # x = torch.tensor([1.0])
+    # print(model(x))
+    # pass
