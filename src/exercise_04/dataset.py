@@ -48,3 +48,5 @@ if __name__ == "__main__":
     print(f"Dataset length: {len(dataset_train)}")
     print(f"First item: {dataset_train[0]}")
     dataset_train.plot(output_folder / "plot_dataset_example.png")
+
+    # hay que usar onehot para que el valor que te dé la imagen te lo de en vector 00000100, no 6.
