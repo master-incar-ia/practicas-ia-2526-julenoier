@@ -1,13 +1,11 @@
 
-# Exercise 1: Learn a linear function with PyTorch
+# Ejercicio 2: Aprender una función cuadrática
 
-## Objective
+## Objectivo
 
-The objective of this exercise is to model an unknown function by a machine learning method.
+Modelar la función cuadrática y = -3x^2 + 2x con PyTorch
 
-*Teacher's Note: The function that we are trying to model is the linear function y = -3x^2 + 2x. The purpose of the exercise is not to discover the analytical function, but to create a model that best mimics the behavior of that function, even if it is a black box for the user.*
-
-## Task Formalization
+## Formalización
 
 The task in hand can be formalized in two steps. First, we will define what we are tring to achieve as clearlly as possible. Second, we will define the approach we are taking to solve it.
 
@@ -37,57 +35,49 @@ The input vector has size [bs x 1]. The weight matrix has size [1 x 1]
 
 ### Task Formalization (Training)
 
-Write your answer here
+Al trabajar con una función cuadrática se ha decidido que la estructura de la red neuronal tiene que ser multicapa. Para ello, se ha seguido la estructura de la primera práctica, pero usando el modelo de un perceptrón multicapa en vez de uno simple.
 
-## Evaluation metrics
+## métricas de evaluación
 
-Since we are dealing with a regression problem, we will use the mean squared error (MSE), mean absolute error (MAE), and R-squared as evaluation metrics.
+Como se está trabajando con un problema de regresión, se va a usar una función de pérdida en forma de error cuadrático medio (MSE), error absoluto de media (MAE) y R-cuadrada como métricas de evaluación.
 
-## Data Considerations
+### Descripción del dataset
 
-### Dataset description
+El dataset utilizado ha sido el mismo que el utilizado en la primera práctica: 100 puntos con ruido con una desviación estándar de 20% de la función real.
 
-Dataset contains 100 noisy data points with a noise standard deviation of 20 from the true function (y = -3x^2 + 2x).
+### Preparación y procesado de los datos
 
-### Data preparation and preprocessing
 
-Write your answer here
+No se ha llevado a cabo ningún preprocesado en el dataset, solamente se ha dividido en entrenamiento, validación y testeo.
 
-### Data augmentation
+### Aumentación de los datos
 
-Write your answer here
+No se ha aumentado el tamaño de los datos
 
-## Model Considerations
+## Consideraciones del modelo
 
-Write your answer here
+Como ya se ha mencionado, al trabajar con una función cuadrática se ha optado por utilizar un modelo multicapa en vez de uno de capa simple.
 
-### Suitable Loss Functions
+### Funciones de pérdida validos
 
-Write your answer here
+Las funciones de pérdida o coste a utilziar en un problema de clasificación son los que calculan cuantitativamente el error entre la respuesta estimada y la correcta. En este caso, error cuadrático medio, error absoluto de media y R cuadrada.
 
-### Selected Loss Function
+### Activación de última capa
 
-Write your answer here
+Como es una tarea de regresión sin límites superiores ni inferiores, la activación de la última capa se deja en la función identidad.
 
-### Possible architectures
+En un principio hemos tenido un problema en el diseño del modelo porque habíamos puesto una relu después de la última capa, por lo que la salida de esa capa siempre salía nula, haciendo que el modelo no aprendiera nada con el entrenamiento. Posteriormente, hemos arreglado ese problema y ha hemos conseguido que el modelo funcione correctamente.
 
-Write your answer here
+### Otras consideraciones
 
-### Last layer activation
 
-Write your answer here
+En relación al problema que se ha tenido por haber puesto una capa de activación relu a la salida de la última capa, se ha subido el learning rate hasta 0.1 porque porque no variaba el validation loss. La razón ha sido que había una capa relu que anulaba la salida. En cualquier caso, tras solucionar el problema y entrenar la red con ese learning rate, la respuesta estimada oscilaba mucho a diferencia de la la real. Por ello, se he bajado un poco más el learning rate hasta lr = 0.001. De esta forma se consigue que el modelo busque más en los mínimos locales que en los globales, obteniendo una salida mejor para este caso.
 
-### Other Considerations
+Por otro lado, se ha decidido poner 64 neuronas en la capa oculta y dos capas intermedias. Ha sido por lo mismo que al principio, que como había relu al final no cambiaba y hemos decidido poner otra capa oculta a ver si con eso cambiaba. Luego nos hemos dado cuenta de que no era ese el problema, pero hemos mantenido las dos capas ocultas. Quitando una de las capas se obtendría un valor mejor que un modelo de una única capa, pero peor que con dos.
 
-Write your answer here
+### Hiperparámetros de entrenamiento
 
-## Training
-
-Write your answer here
-
-### Training hyperparameters
-
-Write your answer here
+Como se ha mencionado, se ha impuesto un learning rate de 0.001, con el que la respuesta obtenida nos ha parecido correcta.
 
 ### Loss function graph
 
@@ -97,11 +87,11 @@ Write your answer here
 
 Write your answer here
 
-## Evaluation
+## Evaluación
 
-### Evaluation metrics
+### Métricas de evaluación
 
-Write your answer here
+
 
 ![image](../../outs/exercise_02/train_regression_plot.png)
 
@@ -139,6 +129,14 @@ Is there overfitting, underfitting or any other issues?
 How can we improve the model?
 How this model will generalize to new data?
 
+El modelo sigue correctamente con los datos predichos a la curva de los datos verdaderos, por lo que se puede decir que el modelo es correcto.
+
+No es demasiado simple porque la parábola se sigue de forma correcta y porque no se ven errores.
+
+Tampoco hay overfitting porque no se ven oscilaciones y las predicciones son suaves. No se considera que el modelo deba ser más complejo o más concreto, ya que resuelve el problema de forma correcta.
+
+Si se utilizaran otros datos la respuesta sería de igual forma correcta. Si la función fuera algo más compleja, posiblemente harían falta más datos de entrenamiento, pero la arquitectura de la red puede mantenerse para solucionar este problema.
+
 ## Design Feedback loops
 
 Describe the process you have followed to improve the model and the evolution of performance of the model during the process.
@@ -152,9 +150,17 @@ Pleaser answer the following questions. Include graphs if necessary. Store the g
 
 ### Which are the differences you found between previous model and this one?
 
+Una neurona puede responder a funciones del tipo
+
+$$
+y=w1\cdot​x1​+w2\cdot​x2​+⋯+b
+$$
+
+Es decir, combina las entradas linealmente. Con ese tipo de red simple se pueden obtener rectas o hiperplanos. Sin embargo, en este caso la función a obtener es cuadrática, una única capa no puede obtener ese modelo. Es por ello que, utilizando un modelo multicapa con neuronal ocultas, permite crear no linealidades en la salida, lo necesario para obtener el modelo de una función cuadrática.
+
 ### Does the model generalizes well to new data?
 
-
+El modelo nuevo funciona correctamente por lo que se puede ver en las curvas predicción/respuesta y por los valores obtenidos en las funciones de pérdida.
 
 
 

@@ -19,7 +19,8 @@ class MultiplePerceptron(nn.Module):
     def __init__(self, input_dim, output_dim, hidden_neurons):
         super().__init__()
         self.fc1 = nn.Linear(input_dim, hidden_neurons)
-        self.fc2 = nn.Linear(hidden_neurons, output_dim)
+        self.fc2 = nn.Linear(hidden_neurons, hidden_neurons)
+        self.fc3 = nn.Linear(hidden_neurons, output_dim)
         self.final_activation = nn.Identity()
         #self.apodo = apodo
         self.relu = nn.ReLU()
@@ -27,11 +28,12 @@ class MultiplePerceptron(nn.Module):
         x = self.fc1(x)
         x = self.relu(x)
         x1 = self.fc2(x)
-        x1 = self.relu(x1) 
+        x1 = self.relu(x1)
+        x2 = self.fc3(x1) 
         if use_activation:
-            y = self.final_activation(x1)
+            y = self.final_activation(x2)
         else:
-            y = x1
+            y = x2
         return y
 
 
