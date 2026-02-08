@@ -9,6 +9,7 @@ from tqdm import tqdm
 
 from .dataset import NoisyRegressionDataset
 from .model import SimplePerceptron
+from .model import MultiplePerceptron
 
 def get_device(force: str = "auto") -> torch.device:
     """Return a torch.device based on the `force` option.
@@ -43,9 +44,9 @@ def train_model(output_folder: Path, device: torch.device):
     # Define the model, loss function, and optimizer
     input_dim = 1
     output_dim = 1
-    model = SimplePerceptron(input_dim, output_dim).to(device)
+    model = MultiplePerceptron(input_dim, output_dim, 64).to(device)
     criterion = nn.MSELoss()
-    optimizer = optim.AdamW(model.parameters(), lr=0.0001)
+    optimizer = optim.AdamW(model.parameters(), lr=0.001)
 
     # Training loop with validation and saving best weights
     num_epochs = 100

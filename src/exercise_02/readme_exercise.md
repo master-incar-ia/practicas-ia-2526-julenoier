@@ -1,13 +1,11 @@
 
-# Exercise 1: Learn a linear function with PyTorch
+# Ejercicio 2: Aprender una función cuadrática
 
-## Objective
+## Objectivo
 
-The objective of this exercise is to model an unknown function by a machine learning method.
+Modelar la función cuadrática y = -3x^2 + 2x con PyTorch
 
-*Teacher's Note: The function that we are trying to model is the linear function y = -3x^2 + 2x. The purpose of the exercise is not to discover the analytical function, but to create a model that best mimics the behavior of that function, even if it is a black box for the user.*
-
-## Task Formalization
+## Formalización
 
 The task in hand can be formalized in two steps. First, we will define what we are tring to achieve as clearlly as possible. Second, we will define the approach we are taking to solve it.
 
@@ -37,57 +35,53 @@ The input vector has size [bs x 1]. The weight matrix has size [1 x 1]
 
 ### Task Formalization (Training)
 
-Write your answer here
+Al trabajar con una función cuadrática se ha decidido que la estructura de la red neuronal tiene que ser multicapa. Para ello, se ha seguido la estructura de la primera práctica, pero usando el modelo de un perceptrón multicapa en vez de uno simple.
 
-## Evaluation metrics
+El entrenamiento se dará de la misma forma que en la práctica anterior, con la diferencia de que se hará introduciendo los datos en uan red con una capa oculta
 
-Since we are dealing with a regression problem, we will use the mean squared error (MSE), mean absolute error (MAE), and R-squared as evaluation metrics.
+## Métricas de evaluación
 
-## Data Considerations
+Como se está trabajando con un problema de regresión, se va a usar una función de pérdida en forma de error cuadrático medio (MSE), error absoluto de media (MAE) y R-cuadrada como métricas de evaluación.
 
-### Dataset description
+### Descripción del dataset
 
-Dataset contains 100 noisy data points with a noise standard deviation of 20 from the true function (y = -3x^2 + 2x).
+El dataset utilizado ha sido el mismo que el utilizado en la primera práctica: 100 puntos con ruido con una desviación estándar de 20% de la función real.
 
-### Data preparation and preprocessing
+### Preparación y procesado de los datos
 
-Write your answer here
 
-### Data augmentation
+No se ha llevado a cabo ningún preprocesado en el dataset, solamente se ha dividido en entrenamiento, validación y testeo.
 
-Write your answer here
+Aunque los datos de entrada se encuentran en el rango [0,100] y la salida alcanza valores elevados (del orden de 10^4), no se aplicó normalización para observar el comportamiento del modelo en su escala original. No obstante, esta decisión puede afectar negativamente a la estabilidad y velocidad de convergencia del entrenamiento. Por lo tanto, aunque no se haya hecho en este ejercicio, lo correcto hubiera sido realizar la normalización del rango de entrada y el rango de salida para realizar el entrenamiento de la red y, posteriormente, desnormalizar para visualizar que el funcionamiento es correcto.
 
-## Model Considerations
+### Aumento de los datos
 
-Write your answer here
+No se ha aumentado el tamaño de los datos
 
-### Suitable Loss Functions
+## Consideraciones del modelo
 
-Write your answer here
+Como ya se ha mencionado, al trabajar con una función cuadrática se ha optado por utilizar un modelo multicapa en vez de uno de capa simple.
 
-### Selected Loss Function
+### Funciones de pérdida validos
 
-Write your answer here
+Las funciones de pérdida o coste a utilziar en un problema de clasificación son los que calculan cuantitativamente el error entre la respuesta estimada y la correcta. En este caso, error cuadrático medio, error absoluto de media y R cuadrada.
 
-### Possible architectures
+### Activación de última capa
 
-Write your answer here
+Como es una tarea de regresión sin límites superiores ni inferiores, la activación de la última capa se deja en la función identidad.
 
-### Last layer activation
+En un principio se ha tenido un problema en el diseño del modelo porque habíamos puesto una ReLU después de la última capa, por lo que la salida de esa capa siempre salía nula, haciendo que el modelo no aprendiera nada con el entrenamiento. Posteriormente, hemos arreglado ese problema y ha hemos conseguido que el modelo funcione correctamente.
 
-Write your answer here
+### Otras consideraciones
 
-### Other Considerations
 
-Write your answer here
+En relación al problema que se ha tenido por haber puesto una capa de activación relu a la salida de la última capa, se ha subido el learning rate hasta 0.1 porque porque no variaba el validation loss. La razón ha sido que había una capa relu que anulaba la salida. En cualquier caso, tras solucionar el problema y entrenar la red con ese learning rate, la respuesta estimada oscilaba mucho a diferencia de la la real. Por ello, se he bajado un poco más el learning rate hasta lr = 0.001. De esta forma se consigue que el modelo busque más en los mínimos locales que en los globales, obteniendo una salida mejor para este caso.
 
-## Training
+Por otro lado, se ha decidido poner 64 neuronas en la capa oculta y dos capas intermedias. Ha sido por lo mismo que al principio, que como había relu al final no cambiaba y hemos decidido poner otra capa oculta a ver si con eso cambiaba. Luego nos hemos dado cuenta de que no era ese el problema, pero hemos mantenido las dos capas ocultas. Quitando una de las capas se obtendría un valor mejor que un modelo de una única capa, pero peor que con dos.
 
-Write your answer here
+### Hiperparámetros de entrenamiento
 
-### Training hyperparameters
-
-Write your answer here
+Como se ha mencionado, se ha impuesto un learning rate de 0.001, con el que la respuesta obtenida nos ha parecido correcta.
 
 ### Loss function graph
 
@@ -95,13 +89,15 @@ Write your answer here
 
 ### Discussion of the training process
 
-Write your answer here
+El proceso de entrenamiento se ha realizado sin aplicar normalización a los datos de entrada. Esta decisión ha provocado una convergencia más lenta del modelo en comparación con un escenario en el que los datos hubieran sido normalizados, requiriendo un mayor número de épocas para alcanzar un error aceptable. La ausencia de normalización afecta al comportamiento del descenso por gradiente, ya que las diferentes escalas de los datos dificultan un ajuste eficiente de los pesos y reducen la estabilidad del proceso de optimización.
 
-## Evaluation
+No obstante, dado el carácter sencillo de este problema en específico, el modelo logró ajustarse correctamente pese a esta limitación.
 
-### Evaluation metrics
+## Evaluación
 
-Write your answer here
+### Métricas de evaluación
+
+
 
 ![image](../../outs/exercise_02/train_regression_plot.png)
 
@@ -139,6 +135,14 @@ Is there overfitting, underfitting or any other issues?
 How can we improve the model?
 How this model will generalize to new data?
 
+El modelo sigue correctamente con los datos predichos a la curva de los datos verdaderos, por lo que se puede decir que el modelo es correcto.
+
+No es demasiado simple porque la parábola se sigue de forma correcta y porque no se ven errores.
+
+Tampoco hay overfitting porque no se ven oscilaciones y las predicciones son suaves. No se considera que el modelo deba ser más complejo o más concreto, ya que resuelve el problema de forma correcta.
+
+Si se utilizaran otros datos la respuesta sería de igual forma correcta. Si la función fuera algo más compleja, posiblemente harían falta más datos de entrenamiento, pero la arquitectura de la red puede mantenerse para solucionar este problema.
+
 ## Design Feedback loops
 
 Describe the process you have followed to improve the model and the evolution of performance of the model during the process.
@@ -150,11 +154,19 @@ You can include a table stating the chanched parameters and the obtained results
 
 Pleaser answer the following questions. Include graphs if necessary. Store the graphs in the `outs/exercise_02` folder.
 
-### Which are the differences you found between previous model and this one?
+### Diferencias entre modelo anterior y este
+
+Una neurona puede responder a funciones del tipo
+
+$$
+y=w1\cdot​x1​+w2\cdot​x2​+⋯+b
+$$
+
+Es decir, combina las entradas linealmente. Con ese tipo de red simple se pueden obtener los modelos de rectas o hiperplanos. Sin embargo, en este caso la función a obtener es cuadrática, una única capa no puede obtener ese modelo. Es por ello que, utilizando un modelo multicapa con neuronal ocultas, permite crear no linealidades en la salida, lo necesario para obtener el modelo de una función cuadrática.
 
 ### Does the model generalizes well to new data?
 
-
+El modelo nuevo funciona correctamente por lo que se puede ver en las curvas predicción/respuesta y por los valores obtenidos en las funciones de pérdida.
 
 
 
