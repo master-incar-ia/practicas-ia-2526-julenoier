@@ -37,7 +37,9 @@ The input vector has size [bs x 1]. The weight matrix has size [1 x 1]
 
 Al trabajar con una función cuadrática se ha decidido que la estructura de la red neuronal tiene que ser multicapa. Para ello, se ha seguido la estructura de la primera práctica, pero usando el modelo de un perceptrón multicapa en vez de uno simple.
 
-## métricas de evaluación
+El entrenamiento se dará de la misma forma que en la práctica anterior, con la diferencia de que se hará introduciendo los datos en uan red con una capa oculta
+
+## Métricas de evaluación
 
 Como se está trabajando con un problema de regresión, se va a usar una función de pérdida en forma de error cuadrático medio (MSE), error absoluto de media (MAE) y R-cuadrada como métricas de evaluación.
 
@@ -50,7 +52,9 @@ El dataset utilizado ha sido el mismo que el utilizado en la primera práctica: 
 
 No se ha llevado a cabo ningún preprocesado en el dataset, solamente se ha dividido en entrenamiento, validación y testeo.
 
-### Aumentación de los datos
+Aunque los datos de entrada se encuentran en el rango [0,100] y la salida alcanza valores elevados (del orden de 10^4), no se aplicó normalización para observar el comportamiento del modelo en su escala original. No obstante, esta decisión puede afectar negativamente a la estabilidad y velocidad de convergencia del entrenamiento. Por lo tanto, aunque no se haya hecho en este ejercicio, lo correcto hubiera sido realizar la normalización del rango de entrada y el rango de salida para realizar el entrenamiento de la red y, posteriormente, desnormalizar para visualizar que el funcionamiento es correcto.
+
+### Aumento de los datos
 
 No se ha aumentado el tamaño de los datos
 
@@ -66,7 +70,7 @@ Las funciones de pérdida o coste a utilziar en un problema de clasificación so
 
 Como es una tarea de regresión sin límites superiores ni inferiores, la activación de la última capa se deja en la función identidad.
 
-En un principio hemos tenido un problema en el diseño del modelo porque habíamos puesto una relu después de la última capa, por lo que la salida de esa capa siempre salía nula, haciendo que el modelo no aprendiera nada con el entrenamiento. Posteriormente, hemos arreglado ese problema y ha hemos conseguido que el modelo funcione correctamente.
+En un principio se ha tenido un problema en el diseño del modelo porque habíamos puesto una ReLU después de la última capa, por lo que la salida de esa capa siempre salía nula, haciendo que el modelo no aprendiera nada con el entrenamiento. Posteriormente, hemos arreglado ese problema y ha hemos conseguido que el modelo funcione correctamente.
 
 ### Otras consideraciones
 
@@ -85,7 +89,9 @@ Como se ha mencionado, se ha impuesto un learning rate de 0.001, con el que la r
 
 ### Discussion of the training process
 
-Write your answer here
+El proceso de entrenamiento se ha realizado sin aplicar normalización a los datos de entrada. Esta decisión ha provocado una convergencia más lenta del modelo en comparación con un escenario en el que los datos hubieran sido normalizados, requiriendo un mayor número de épocas para alcanzar un error aceptable. La ausencia de normalización afecta al comportamiento del descenso por gradiente, ya que las diferentes escalas de los datos dificultan un ajuste eficiente de los pesos y reducen la estabilidad del proceso de optimización.
+
+No obstante, dado el carácter sencillo de este problema en específico, el modelo logró ajustarse correctamente pese a esta limitación.
 
 ## Evaluación
 
@@ -148,7 +154,7 @@ You can include a table stating the chanched parameters and the obtained results
 
 Pleaser answer the following questions. Include graphs if necessary. Store the graphs in the `outs/exercise_02` folder.
 
-### Which are the differences you found between previous model and this one?
+### Diferencias entre modelo anterior y este
 
 Una neurona puede responder a funciones del tipo
 
@@ -156,7 +162,7 @@ $$
 y=w1\cdot​x1​+w2\cdot​x2​+⋯+b
 $$
 
-Es decir, combina las entradas linealmente. Con ese tipo de red simple se pueden obtener rectas o hiperplanos. Sin embargo, en este caso la función a obtener es cuadrática, una única capa no puede obtener ese modelo. Es por ello que, utilizando un modelo multicapa con neuronal ocultas, permite crear no linealidades en la salida, lo necesario para obtener el modelo de una función cuadrática.
+Es decir, combina las entradas linealmente. Con ese tipo de red simple se pueden obtener los modelos de rectas o hiperplanos. Sin embargo, en este caso la función a obtener es cuadrática, una única capa no puede obtener ese modelo. Es por ello que, utilizando un modelo multicapa con neuronal ocultas, permite crear no linealidades en la salida, lo necesario para obtener el modelo de una función cuadrática.
 
 ### Does the model generalizes well to new data?
 
