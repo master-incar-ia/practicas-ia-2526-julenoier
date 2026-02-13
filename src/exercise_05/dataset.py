@@ -7,6 +7,7 @@ from torchvision import datasets, transforms
 
 
 class CIFAR10Dataset(Dataset):
+    
     def __init__(self, root, train=True, transform=None, download=True):
         self.data = datasets.CIFAR10(root=root, train=train, transform=transform, download=download)
 
@@ -27,7 +28,7 @@ class CIFAR10Dataset(Dataset):
                 plt.grid(False)
                 img = self.data[i * 10 + j][0].permute(1, 2, 0)
                 #change axis 0 and 3
-                plt.imshow(img, cmap=plt.cm.binary)
+                plt.imshow(img)
                 plt.xlabel(self.data.classes[self.data[i * 10 + j][1]])
         plt.show()
         plt.savefig(filepath)
@@ -43,8 +44,12 @@ if __name__ == "__main__":
         [transforms.ToTensor(), transforms.Normalize((0.0, 0.0, 0.0), (1.0, 1.0, 1.0))]
     )
 
+
+    
     dataset_train = CIFAR10Dataset("./data", train=True, transform=transform)
     dataset_test = CIFAR10Dataset("./data", train=False, transform=transform)
+    dataset_val = CIFAR10Dataset("./data", train=True, transform=transform)
     print(f"Dataset length: {len(dataset_train)}")
     print(f"First item: {dataset_train[0]}")
+    image , label =dataset_train[0]
     dataset_train.plot(output_folder / "plot_dataset_example.png")
