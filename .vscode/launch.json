@@ -4,6 +4,7 @@
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
+    
         {
             "name": "Python: Module",
             "type": "debugpy",
@@ -47,34 +48,34 @@
             "console": "integratedTerminal"
         },
         {
-            "name": "exercise_02.dataset",
+            "name": "exercise_04.dataset",
             "type": "debugpy",
             "request": "launch",
-            "module": "src.exercise_02.dataset",
+            "module": "src.exercise_04.dataset",
             "console": "integratedTerminal",
             "JustMyCode": false
         },
         {
-            "name": "exercise_02.train",
+            "name": "exercise_04.train",
             "type": "debugpy",
             "request": "launch",
-            "module": "src.exercise_02.train",
+            "module": "src.exercise_04.train",
             "console": "integratedTerminal",
             "JustMyCode": false
         },
         {
-            "name": "exercise_02.model",
+            "name": "exercise_04.model",
             "type": "debugpy",
             "request": "launch",
-            "module": "src.exercise_02.model",
+            "module": "src.exercise_04.model",
             "console": "integratedTerminal",
             "JustMyCode": false
         },
         {
-            "name": "exercise_02.evaluate",
+            "name": "exercise_04.evaluate",
             "type": "debugpy",
             "request": "launch",
-            "module": "src.exercise_02.evaluate",
+            "module": "src.exercise_04.evaluate",
             "console": "integratedTerminal",
             "JustMyCode": false 
         },
