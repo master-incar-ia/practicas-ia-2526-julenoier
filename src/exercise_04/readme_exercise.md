@@ -47,7 +47,7 @@ Para clasificación multiclase, la función de pérdida adecuada es CrossEntropy
 
 ### Selected Loss Function
 
-Se ha utilizado nn.CrossEntropyLoss() porwue es el estándar multiclase e internamente aplica un softmax (por eso no hay que poner softmax en la última capa del modelo, porque ya lo tiene la función de pérdida).
+Se ha utilizado nn.CrossEntropyLoss() porque es el estándar multiclase e internamente aplica un softmax (por eso no hay que poner softmax en la última capa del modelo, porque ya lo tiene la función de pérdida).
 
 ### Possible architectures
 
@@ -80,7 +80,7 @@ Optimizador para la regularización
 
 Learning rate = 0.0005
 
-Épocas 7. En un inicio estaba a 12, pero al ver que la red no mejorada se ha decidido parar antes
+Épocas 7. En un inicio estaba a 12, pero al ver que la red no mejoraba se ha decidido parar antes
 
 Optimizador: Adamw
 
@@ -158,7 +158,7 @@ El modelo muestra un equilibrio saludable:
 
     La validación no empeora progresivamente (síntoma de overfitting)
 
-    En los primeros entrenamientos el overfitting er evidente, ya que el validation loss no bajaba (estancado y oscilando), pero el train loss sí. la matriz de confusión no era del todo mala, pero porque la red se aprendía los resultados. Por ello se ha introducido un de dropout también. 
+    En los primeros entrenamientos el overfitting era evidente, ya que el validation loss no bajaba (estancado y oscilando), pero el train loss sí. la matriz de confusión no era del todo mala, pero porque la red se aprendía los resultados. Por ello se ha introducido un dropout también. 
 
     El accuracy de 71% es aceptable para una red pequeña
 
@@ -187,7 +187,7 @@ El modelo muestra un equilibrio saludable:
     1	        LR=0.0001, batch=10	~60%	Muy lento, no converge bien
     2	        LR=0.001, batch=10	62% pero overfitting	Validation loss oscila, train loss baja rápido
     3	        Normalización correcta	65%	Mejora inicial
-    4	        + Dropout (0.3)	68%	Reduce overfitting
+    4	        + Dropout (0.25)	68%	Reduce overfitting
     5	        + 3ª capa convolucional	71%	Mejor capacidad, estabilidad
     6	        Early stopping en época 7	71%	Optimización temporal
 
