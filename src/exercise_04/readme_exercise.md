@@ -37,17 +37,9 @@ El preprocesado convierte las imágenes PIL a tensores y normaliza los valores d
 
 ### Data augmentation
 
-El aumento de datos aplicado solo durante el entrenamiento incluye:
-
-    Volteo horizontal aleatorio: Refleja la imagen con probabilidad 0.5, aumentando la variabilidad sin perder la identidad semántica
-
-    Recorte aleatorio con padding: Añade 4 píxeles de borde y recorta aleatoriamente una región de 32x32, introduciendo invarianza a pequeñas traslaciones
-
-Estas técnicas reducen el overfitting al exponer al modelo a más variaciones de las imágenes originales, mejorando la generalización sin aumentar el tiempo de inferencia.
+No hay aumento de datos, solo normalización
 
 ## Model Considerations
-
-
 
 ### Suitable Loss Functions
 
