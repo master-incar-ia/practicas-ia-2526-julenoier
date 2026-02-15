@@ -9,7 +9,7 @@ from torchvision import datasets, transforms
 from tqdm import tqdm
 
 from .dataset import CIFAR10Dataset
-from .model import MultiLayerPerceptron
+from .model import MultiLayerPerceptron_2
 
 def get_device(force: str = "auto") -> torch.device:
     """Return a torch.device based on the `force` option.
@@ -39,9 +39,8 @@ def train_model(output_folder: Path, device: torch.device):
     val_loader = DataLoader(dataset_val, batch_size=256, shuffle=False, pin_memory=pin_memory)
 
     # Define the model, loss function, and optimizer
-    input_dim = 3072 # (3x32x32)
     output_dim = 10
-    model = MultiLayerPerceptron(input_dim, output_dim, num_hidden_neurons=128).to(device)
+    model = MultiLayerPerceptron_2(output_dim).to(device)
     criterion = nn.CrossEntropyLoss() # Reemplaza a nn.MSELoss()
     optimizer = optim.AdamW(model.parameters(), lr=0.001)
 
@@ -60,7 +59,7 @@ def train_model(output_folder: Path, device: torch.device):
             # Forward pass
             inputs_cuda = inputs.to(device)
             targets_cuda = targets.to(device)
-            outputs = model(inputs_cuda, use_activation=False)
+            outputs = model(inputs_cuda)
             loss = criterion(outputs, targets_cuda)
 
 
@@ -82,7 +81,7 @@ def train_model(output_folder: Path, device: torch.device):
             for inputs, targets in val_loader:
                 inputs_cuda = inputs.to(device)
                 targets_cuda = targets.to(device)
-                outputs = model(inputs_cuda, use_activation=False)
+                outputs = model(inputs_cuda)
                 loss = criterion(outputs, targets_cuda)
                 val_loss += loss.item()
 
