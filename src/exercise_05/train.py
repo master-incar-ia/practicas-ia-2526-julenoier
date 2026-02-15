@@ -9,7 +9,7 @@ from torchvision import datasets, transforms
 from tqdm import tqdm
 
 from .dataset import CIFAR10Dataset
-from .model import MultiLayerPerceptron_2
+from .model import MultiLayerPerceptron_2, MultiLayerPerceptron
 
 def get_device(force: str = "auto") -> torch.device:
     """Return a torch.device based on the `force` option.
@@ -41,6 +41,7 @@ def train_model(output_folder: Path, device: torch.device):
     # Define the model, loss function, and optimizer
     output_dim = 10
     model = MultiLayerPerceptron_2(output_dim).to(device)
+    # model = MultiLayerPerceptron(input_dim = 3072, output_dim = output_dim, num_hidden_neurons=128).to(device)
     criterion = nn.CrossEntropyLoss() # Reemplaza a nn.MSELoss()
     optimizer = optim.AdamW(model.parameters(), lr=0.001)
 

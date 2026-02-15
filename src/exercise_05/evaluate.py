@@ -66,8 +66,8 @@ def evaluate_and_plot(loader, model, dataset_name, output_folder):
     )
 
     plt.xlabel("Predicción")
-    plt.ylabel("Realidad (Target)")
-    plt.title("Matriz de Confusión - CIFAR-10")
+    plt.ylabel("Objetivo")
+    plt.title("Matriz de Confusión Test - CIFAR-10")
     plt.savefig(output_folder / f"confusion_matrix_{dataset_name}.png")
     plt.show()
 
@@ -161,24 +161,18 @@ if __name__ == "__main__":
     test_loader = DataLoader(test_dataset, batch_size=2024, shuffle=False)
 
     # Load the best model weights
-    model = MultiLayerPerceptron_2(output_dim=10)
+    model = MultiLayerPerceptron_2(output_dim = 10)
     model.load_state_dict(torch.load(output_folder / "best_model.pth"))
 
     metrics = {}
     # Evaluate and plot for train, validation and test datasets
-    metrics["train"] = evaluate_and_plot(train_loader, model, "train", output_folder)
-    metrics["validation"] = evaluate_and_plot(val_loader, model, "validation", output_folder)
     metrics["test"] = evaluate_and_plot(test_loader, model, "test", output_folder)
 
     # save  metrics as csv
-    pd.DataFrame(metrics["train"]).to_csv(output_folder / "metrics_train.csv")
-    pd.DataFrame(metrics["validation"]).to_csv(output_folder / "metrics_validation.csv")
     pd.DataFrame(metrics["test"]).to_csv(output_folder / "metrics_test.csv")
     pd.DataFrame(metrics).to_csv(output_folder / "metrics.csv")
 
     # Save the metrics as an image
-    save_metrics_as_picture(metrics["train"], output_folder / "metrics_train.png")
-    save_metrics_as_picture(metrics["validation"], output_folder / "metrics_validation.png")
     save_metrics_as_picture(metrics["test"], output_folder / "metrics_test.png")
 
     print("Evaluation complete!")
